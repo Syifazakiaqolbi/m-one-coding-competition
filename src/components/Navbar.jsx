@@ -27,7 +27,11 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
+          <Link
+            to="/"
+            className="flex items-center gap-2"
+            aria-label="CodeKids - Kembali ke Home"
+          >
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <Code2 className="text-white" size={24} />
             </div>
@@ -51,6 +55,7 @@ export default function Navbar() {
             <Link
               to="/progress"
               className="flex items-center gap-1 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-bold text-sm hover:bg-yellow-200 transition-all"
+              aria-label={`Total poin: ${poin}`}
             >
               <Star size={14} className="fill-yellow-500 text-yellow-500" />
               {poin}
@@ -60,6 +65,8 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden text-gray-700"
+            aria-label={isOpen ? 'Tutup menu' : 'Buka menu'}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

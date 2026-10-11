@@ -4,8 +4,10 @@ import { Play, RotateCcw, Code2 } from 'lucide-react';
 
 const contohKode = {
   html: `<!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <title>Playground CodeKids</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +15,7 @@ const contohKode = {
       padding: 40px;
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
+      margin: 0;
     }
     h1 {
       font-size: 48px;
@@ -31,6 +34,10 @@ const contohKode = {
       font-size: 16px;
       cursor: pointer;
       margin-top: 20px;
+    }
+    button:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
     }
   </style>
 </head>
@@ -73,7 +80,6 @@ export default function Playground() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          {/* Editor */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -92,6 +98,7 @@ export default function Playground() {
                 <button
                   onClick={handleReset}
                   className="text-gray-400 hover:text-white p-1 rounded transition-colors"
+                  aria-label="Reset kode ke contoh awal"
                   title="Reset"
                 >
                   <RotateCcw size={16} />
@@ -99,20 +106,25 @@ export default function Playground() {
                 <button
                   onClick={handleRun}
                   className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center gap-1 transition-colors"
+                  aria-label="Jalankan kode"
                 >
                   <Play size={14} /> Jalankan
                 </button>
               </div>
             </div>
+            <label htmlFor="code-editor" className="sr-only">
+              Editor kode HTML
+            </label>
             <textarea
+              id="code-editor"
               value={kode}
               onChange={(e) => setKode(e.target.value)}
               className="w-full h-96 p-4 bg-gray-900 text-gray-100 font-mono text-sm resize-none focus:outline-none"
               spellCheck={false}
+              aria-label="Editor kode HTML"
             />
           </motion.div>
 
-          {/* Preview */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -125,7 +137,7 @@ export default function Playground() {
             </div>
             <iframe
               srcDoc={output}
-              title="preview"
+              title="Preview hasil kode"
               className="w-full h-96 bg-white"
               sandbox="allow-scripts"
             />
