@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Code2 } from 'lucide-react';
+import { Menu, X, Code2, Star } from 'lucide-react';
+import { getProgress } from '../utils/progress';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [poin, setPoin] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    setPoin(getProgress().poin);
+  }, [location.pathname]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -12,6 +18,7 @@ export default function Navbar() {
     { name: 'Quiz', path: '/quiz' },
     { name: 'Playground', path: '/playground' },
     { name: 'Progress', path: '/progress' },
+    { name: 'Tentang', path: '/tentang' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -27,12 +34,12 @@ export default function Navbar() {
             <span className="text-xl font-extrabold text-primary">CodeKids</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-5">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`font-semibold transition-colors ${
+                className={`text-sm font-semibold transition-colors ${
                   isActive(link.path)
                     ? 'text-primary'
                     : 'text-gray-700 hover:text-primary'
@@ -42,23 +49,24 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              to="/materi"
-              className="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-indigo-700 transition-all hover:scale-105"
+              to="/progress"
+              className="flex items-center gap-1 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-bold text-sm hover:bg-yellow-200 transition-all"
             >
-              Mulai Belajar
+              <Star size={14} className="fill-yellow-500 text-yellow-500" />
+              {poin}
             </Link>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700"
+            className="lg:hidden text-gray-700"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
         {isOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div className="lg:hidden py-4 border-t">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -69,13 +77,6 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/materi"
-              onClick={() => setIsOpen(false)}
-              className="block mt-4 bg-primary text-white px-6 py-3 rounded-full font-bold text-center"
-            >
-              Mulai Belajar
-            </Link>
           </div>
         )}
       </div>
