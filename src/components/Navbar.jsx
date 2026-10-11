@@ -7,11 +7,13 @@ export default function Navbar() {
   const location = useLocation();
 
   const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'Materi', path: '/materi' },
-  { name: 'Quiz', path: '/quiz' },
-  { name: 'Playground', path: '/playground' },
-];
+    { name: 'Home', path: '/' },
+    { name: 'Materi', path: '/materi' },
+    { name: 'Quiz', path: '/quiz' },
+    { name: 'Playground', path: '/playground' },
+    { name: 'Progress', path: '/progress' },
+  ];
+
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -25,7 +27,7 @@ export default function Navbar() {
             <span className="text-xl font-extrabold text-primary">CodeKids</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}

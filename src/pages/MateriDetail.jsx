@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, CheckCircle } from 'lucide-react';
 import { materiList } from '../data/materi';
+import { tandaiMateriSelesai } from '../utils/progress';
 
 export default function MateriDetail() {
   const { id } = useParams();
@@ -13,10 +14,7 @@ export default function MateriDetail() {
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           Materi tidak ditemukan 😢
         </h1>
-        <Link
-          to="/materi"
-          className="text-primary font-bold hover:underline"
-        >
+        <Link to="/materi" className="text-primary font-bold hover:underline">
           ← Kembali ke daftar materi
         </Link>
       </div>
@@ -26,7 +24,6 @@ export default function MateriDetail() {
   return (
     <div className="min-h-screen bg-background pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
         <Link
           to="/materi"
           className="inline-flex items-center gap-2 text-gray-600 hover:text-primary font-semibold mb-6 transition-colors"
@@ -35,7 +32,6 @@ export default function MateriDetail() {
           Kembali ke Materi
         </Link>
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,7 +65,6 @@ export default function MateriDetail() {
           </div>
         </motion.div>
 
-        {/* Konten */}
         <div className="space-y-6">
           {materi.konten.map((item, i) => (
             <motion.div
@@ -108,14 +103,25 @@ export default function MateriDetail() {
         <div className="mt-10 text-center bg-gradient-to-br from-primary to-indigo-700 rounded-3xl p-8 text-white">
           <h2 className="text-2xl font-bold mb-2">Sudah paham materinya?</h2>
           <p className="mb-6 opacity-90">
-            Uji pemahamanmu dengan quiz seru!
+            Tandai selesai dan uji pemahamanmu dengan quiz!
           </p>
-          <Link
-            to="/quiz"
-            className="inline-block bg-white text-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform"
-          >
-            Mulai Quiz 🎯
-          </Link>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <button
+              onClick={() => {
+                tandaiMateriSelesai(materi.id);
+                alert('🎉 Materi ditandai selesai! +10 poin');
+              }}
+              className="inline-block bg-white text-primary px-6 py-3 rounded-full font-bold hover:scale-105 transition-transform"
+            >
+              ✓ Tandai Selesai
+            </button>
+            <Link
+              to="/quiz"
+              className="inline-block bg-secondary text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-transform"
+            >
+              Mulai Quiz 🎯
+            </Link>
+          </div>
         </div>
       </div>
     </div>

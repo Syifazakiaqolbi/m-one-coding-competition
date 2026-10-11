@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, XCircle, Trophy, RotateCcw, ArrowRight } from 'lucide-react';
+import {
+  CheckCircle,
+  XCircle,
+  Trophy,
+  RotateCcw,
+  ArrowRight,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { quizData } from '../data/quiz';
+import { simpanSkorQuiz, cekBadgeBaru } from '../utils/progress';
 
 export default function Quiz() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,6 +41,17 @@ export default function Quiz() {
       setIsAnswered(false);
     } else {
       setIsFinished(true);
+      simpanSkorQuiz(score, quizData.length);
+      const badgesBaru = cekBadgeBaru();
+      if (badgesBaru.length > 0) {
+        setTimeout(() => {
+          alert(
+            `🏅 Badge baru: ${badgesBaru
+              .map((b) => b.icon + ' ' + b.nama)
+              .join(', ')}`
+          );
+        }, 500);
+      }
     }
   };
 
@@ -46,7 +64,6 @@ export default function Quiz() {
     setAnswers([]);
   };
 
-  // ==== HALAMAN SELESAI ====
   if (isFinished) {
     const persen = Math.round((score / quizData.length) * 100);
     let badge, pesan, warna;
@@ -76,7 +93,9 @@ export default function Quiz() {
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-2xl w-full mx-4 bg-white rounded-3xl shadow-2xl p-8 text-center"
         >
-          <div className={`w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br ${warna} flex items-center justify-center text-6xl`}>
+          <div
+            className={`w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br ${warna} flex items-center justify-center text-6xl`}
+          >
             {badge}
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
@@ -88,9 +107,7 @@ export default function Quiz() {
             <div className="text-5xl font-extrabold text-primary mb-2">
               {score}/{quizData.length}
             </div>
-            <div className="text-gray-600 font-semibold">
-              Skor: {persen}%
-            </div>
+            <div className="text-gray-600 font-semibold">Skor: {persen}%</div>
             <div className="mt-4 w-full bg-gray-200 rounded-full h-3 overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
@@ -110,6 +127,12 @@ export default function Quiz() {
               Coba Lagi
             </button>
             <Link
+              to="/progress"
+              className="inline-flex items-center gap-2 bg-secondary text-white px-6 py-3 rounded-full font-bold hover:bg-orange-600 transition-all"
+            >
+              Lihat Progress
+            </Link>
+            <Link
               to="/materi"
               className="inline-flex items-center gap-2 bg-white text-primary border-2 border-primary px-6 py-3 rounded-full font-bold hover:bg-indigo-50 transition-all"
             >
@@ -121,11 +144,9 @@ export default function Quiz() {
     );
   }
 
-  // ==== HALAMAN QUIZ ====
   return (
     <div className="min-h-screen bg-background pt-24 pb-16">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-bold text-gray-500">
@@ -138,7 +159,9 @@ export default function Quiz() {
           <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${((currentIndex + 1) / quizData.length) * 100}%` }}
+              animate={{
+                width: `${((currentIndex + 1) / quizData.length) * 100}%`,
+              }}
               className="h-full bg-gradient-to-r from-primary to-indigo-500"
             />
           </div>
@@ -205,7 +228,6 @@ export default function Quiz() {
               })}
             </div>
 
-            {/* Penjelasan */}
             <AnimatePresence>
               {isAnswered && (
                 <motion.div
@@ -227,7 +249,6 @@ export default function Quiz() {
               )}
             </AnimatePresence>
 
-            {/* Tombol */}
             <div className="mt-6 flex justify-end">
               {!isAnswered ? (
                 <button
@@ -242,7 +263,9 @@ export default function Quiz() {
                   onClick={handleNext}
                   className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition-all"
                 >
-                  {currentIndex < quizData.length - 1 ? 'Soal Berikutnya' : 'Lihat Hasil'}
+                  {currentIndex < quizData.length - 1
+                    ? 'Soal Berikutnya'
+                    : 'Lihat Hasil'}
                   <ArrowRight size={18} />
                 </button>
               )}
