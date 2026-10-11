@@ -4,6 +4,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Materi from './pages/Materi';
 import MateriDetail from './pages/MateriDetail';
+import Quiz from './pages/Quiz';
+import Playground from './pages/Playground';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/materi" element={<Materi />} />
           <Route path="/materi/:id" element={<MateriDetail />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/playground" element={<Playground />} />
         </Routes>
       </main>
       <Footer />

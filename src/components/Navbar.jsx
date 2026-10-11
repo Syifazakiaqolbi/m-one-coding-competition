@@ -7,11 +7,11 @@ export default function Navbar() {
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Materi', path: '/materi' },
-    { name: 'Quiz', path: '/quiz' },
-  ];
-
+  { name: 'Home', path: '/' },
+  { name: 'Materi', path: '/materi' },
+  { name: 'Quiz', path: '/quiz' },
+  { name: 'Playground', path: '/playground' },
+];
   const isActive = (path) => location.pathname === path;
 
   return (

@@ -1,0 +1,73 @@
+export const quizData = [
+  {
+    id: 1,
+    pertanyaan: 'Tag HTML apa yang digunakan untuk membuat judul besar?',
+    pilihan: ['<p>', '<h1>', '<div>', '<span>'],
+    jawaban: 1,
+    penjelasan: 'Tag <h1> digunakan untuk judul utama di halaman website.',
+  },
+  {
+    id: 2,
+    pertanyaan: 'CSS digunakan untuk apa?',
+    pilihan: [
+      'Membuat struktur website',
+      'Membuat tampilan website jadi cantik',
+      'Menyimpan data',
+      'Mengirim email',
+    ],
+    jawaban: 1,
+    penjelasan: 'CSS (Cascading Style Sheets) mengatur warna, ukuran, dan tampilan website.',
+  },
+  {
+    id: 3,
+    pertanyaan: 'Kata kunci apa untuk membuat variabel di JavaScript?',
+    pilihan: ['var', 'let', 'const', 'Semua benar'],
+    jawaban: 3,
+    penjelasan: 'var, let, dan const semuanya bisa dipakai untuk membuat variabel.',
+  },
+  {
+    id: 4,
+    pertanyaan: 'Tag apa untuk menampilkan gambar di HTML?',
+    pilihan: ['<image>', '<picture>', '<img>', '<photo>'],
+    jawaban: 2,
+    penjelasan: 'Tag <img> digunakan untuk menampilkan gambar.',
+  },
+  {
+    id: 5,
+    pertanyaan: 'Bagaimana cara menulis komentar di JavaScript?',
+    pilihan: ['<!-- -->', '// komentar', '# komentar', '** komentar'],
+    jawaban: 1,
+    penjelasan: 'Di JavaScript, komentar ditulis dengan // untuk satu baris.',
+  },
+  {
+    id: 6,
+    pertanyaan: 'Properti CSS untuk mengubah warna teks?',
+    pilihan: ['background', 'color', 'font', 'text-style'],
+    jawaban: 1,
+    penjelasan: 'Properti color di CSS digunakan untuk mengubah warna teks.',
+  },
+  {
+    id: 7,
+    pertanyaan: 'Bagaimana cara membuat fungsi di JavaScript?',
+    pilihan: [
+      'function namaku() {}',
+      'def namaku() {}',
+      'func namaku() {}',
+      'make namaku() {}',
+    ],
+    jawaban: 0,
+    penjelasan: 'Kata kunci function diikuti nama dan tanda kurung untuk membuat fungsi.',
+  },
+  {
+    id: 8,
+    pertanyaan: 'Apa kepanjangan HTML?',
+    pilihan: [
+      'HyperText Markup Language',
+      'High Tech Modern Language',
+      'Home Tool Markup Language',
+      'Hyperlink Text Making Language',
+    ],
+    jawaban: 0,
+    penjelasan: 'HTML adalah singkatan dari HyperText Markup Language.',
+  },
+];
