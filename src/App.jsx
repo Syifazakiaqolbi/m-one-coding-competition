@@ -1,14 +1,17 @@
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Footer from './components/Footer';
+
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-primary mb-4">
-          M-ONE Coding Competition
-        </h1>
-        <p className="text-lg text-gray-600">
-          Web Education for Kids — Coming Soon 🚀
-        </p>
-      </div>
+    <div className="min-h-screen">
+      <Navbar />
+      <main>
+        <Hero />
+        <Features />
+      </main>
+      <Footer />
     </div>
   );
 }
