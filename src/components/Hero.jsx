@@ -1,5 +1,6 @@
 import { Rocket, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -28,19 +29,26 @@ export default function Hero() {
               warna!
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="#mulai"
+              {/* ✅ TOMBOL 1: Link ke halaman /materi */}
+              <Link
+                to="/materi"
                 className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-indigo-700 transition-all hover:scale-105 shadow-lg shadow-indigo-200"
               >
                 <Rocket size={20} />
                 Mulai Belajar Gratis
-              </a>
-              <a
-                href="#fitur"
+              </Link>
+
+              {/* ✅ TOMBOL 2: Smooth scroll ke section fitur */}
+              <button
+                onClick={() =>
+                  document
+                    .getElementById('fitur')
+                    ?.scrollIntoView({ behavior: 'smooth' })
+                }
                 className="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 rounded-full font-bold text-lg border-2 border-primary hover:bg-indigo-50 transition-all"
               >
                 Lihat Fitur
-              </a>
+              </button>
             </div>
           </motion.div>
 
