@@ -1,103 +1,141 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, BookOpen } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Clock } from 'lucide-react';
 import { materiList } from '../data/materi';
+import { getProgress } from '../utils/progress';
+import MateriModal from '../components/MateriModal';
 
 export default function Materi() {
   const [filter, setFilter] = useState('Semua');
-  const kategoriList = ['Semua', 'HTML', 'CSS', 'JavaScript'];
+  const [selectedMateri, setSelectedMateri] = useState(null);
+  const [progress, setProgress] = useState(getProgress());
 
+  const kategoriList = ['Semua', 'HTML', 'CSS', 'JavaScript'];
   const filteredMateri =
-    filter === 'Semua'
-      ? materiList
-      : materiList.filter((m) => m.kategori === filter);
+    filter === 'Semua' ? materiList : materiList.filter((m) => m.kategori === filter);
+
+  const kategoriColor = {
+    Semua: 'from-indigo-500 to-purple-500',
+    HTML: 'from-orange-400 to-red-500',
+    CSS: 'from-blue-400 to-cyan-500',
+    JavaScript: 'from-yellow-400 to-orange-500',
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMateri(null);
+    setProgress(getProgress());
+  };
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-yellow-50 to-pink-50 pt-20 pb-10 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 relative z-10">
+        {/* Header super compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-4"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-            Materi <span className="text-primary">Belajar</span>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-1">
+            📚 Materi Belajar
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Pilih materi favoritmu dan mulai belajar coding dengan
-            menyenangkan!
+          <p className="text-gray-600 font-semibold text-sm">
+            Klik kartu untuk langsung belajar! ✨
           </p>
         </motion.div>
 
-        {/* Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
+        {/* Filter compact */}
+        <div className="flex flex-wrap justify-center gap-1.5 mb-4">
           {kategoriList.map((k) => (
             <button
               key={k}
               onClick={() => setFilter(k)}
-              className={`px-6 py-2 rounded-full font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-full font-extrabold text-xs transition-all ${
                 filter === k
-                  ? 'bg-primary text-white shadow-lg shadow-indigo-200'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  ? `bg-gradient-to-r ${kategoriColor[k]} text-white shadow-md scale-105`
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
               }`}
             >
+              {k === 'Semua' && '🌟 '}
+              {k === 'HTML' && '📄 '}
+              {k === 'CSS' && '🎨 '}
+              {k === 'JavaScript' && '⚡ '}
               {k}
             </button>
           ))}
         </div>
 
-        {/* Grid Materi */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredMateri.map((m, i) => (
-            <motion.div
-              key={m.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-            >
-              <Link
-                to={`/materi/${m.id}`}
-                className="block bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-primary/30 hover:shadow-xl transition-all hover:-translate-y-2 h-full"
+        {/* Grid super compact — 9 kartu dalam 1 layar */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2.5">
+          {filteredMateri.map((m, i) => {
+            const isDone = progress.materiSelesai.includes(m.id);
+            return (
+              <motion.button
+                key={m.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.03 }}
+                whileHover={{ scale: 1.04, y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setSelectedMateri(m)}
+                className="text-left bg-white rounded-2xl p-3 border-2 border-white shadow-md hover:shadow-xl transition-all relative overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div
-                    className={`w-14 h-14 rounded-2xl ${m.warna} flex items-center justify-center text-2xl`}
-                  >
-                    {m.icon}
+                {isDone && (
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-green-500 text-white text-xs font-extrabold rounded-full shadow flex items-center justify-center">
+                    ✓
                   </div>
-                  <span className="text-xs font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-600">
-                    {m.level}
-                  </span>
+                )}
+
+                <div
+                  className={`w-12 h-12 rounded-xl ${m.warna} flex items-center justify-center text-2xl shadow-sm mb-2`}
+                >
+                  {m.icon}
                 </div>
+
                 <span
-                  className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${m.warna} mb-3`}
+                  className={`inline-block text-[9px] font-extrabold px-2 py-0.5 rounded-full ${m.warna} mb-1`}
                 >
                   {m.kategori}
                 </span>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+
+                <h3 className="text-xs font-extrabold text-gray-900 mb-0.5 leading-tight line-clamp-2">
                   {m.judul}
                 </h3>
-                <p className="text-gray-600 mb-4 leading-relaxed">
-                  {m.deskripsi}
-                </p>
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock size={16} />
-                  <span>{m.durasi}</span>
+
+                <div className="flex items-center gap-1 mt-1.5 text-[10px] text-gray-500 font-bold">
+                  <Clock size={10} /> {m.durasi}
                 </div>
-              </Link>
-            </motion.div>
-          ))}
+              </motion.button>
+            );
+          })}
         </div>
 
-        {filteredMateri.length === 0 && (
-          <div className="text-center py-16 text-gray-500">
-            <BookOpen size={48} className="mx-auto mb-4 opacity-50" />
-            <p>Belum ada materi untuk kategori ini.</p>
+        {/* CTA compact */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-6 text-center"
+        >
+          <div className="inline-block bg-gradient-to-r from-primary to-purple-600 rounded-2xl px-6 py-4 shadow-xl">
+            <h2 className="text-base font-extrabold text-white mb-2">
+              Sudah selesai belajar? 🎯
+            </h2>
+            <a
+              href="/quiz"
+              className="inline-block bg-white text-primary px-5 py-2 rounded-full font-extrabold text-sm hover:scale-105 transition-transform shadow-lg"
+            >
+              Mulai Quiz 🚀
+            </a>
           </div>
-        )}
+        </motion.div>
       </div>
+
+      {/* Modal */}
+      <MateriModal
+        materi={selectedMateri}
+        isOpen={!!selectedMateri}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }

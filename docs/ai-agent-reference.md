@@ -52,3 +52,41 @@ docs/
 
 ## 7. Target Audiens
 Anak SD (6–12 tahun) — bahasa sederhana, visual menarik, warna cerah, tombol besar.
+
+---
+
+## 8. Timeline Pengerjaan
+
+- **Garis start lomba:** 5 Oktober 2026, 09.30 WIB
+- **Mulai pengerjaan:** 11 Oktober 2026, 09.30 WIB
+- **Selesai:** 14 Oktober 2026
+- **Alasan:** Info lomba diterima setelah garis start, sehingga pengerjaan dimulai 11 Oktober. Semua kode dibuat dari nol.
+
+## 9. Deployment
+
+- **Hosting:** Vercel (bebas sesuai ketentuan lomba)
+- **URL:** https://m-one-coding-competition.vercel.app
+- **Repo:** https://github.com/Syifazakiaqolbi/m-one-coding-competition (Public)
+- **CI/CD:** Otomatis via Vercel + GitHub (setiap push → auto-deploy)
+
+## 10. AI Tools yang Digunakan
+
+- **DeepSeek** — untuk generate kode, debugging, dokumentasi
+- Semua prompt dicatat di `docs/jurnal-prompt.md` dan `docs/log-mentah/`
+
+## 11. Skor Lighthouse Final
+
+| Kategori | Skor |
+|----------|------|
+| Performance | 84 |
+| Accessibility | 93 |
+| Best Practices | 100 |
+| SEO | 91 |
+
+## 12. Bukti Keaslian
+
+- Commit pertama: 11 Oktober 2026
+- Commit terakhir: 14 Oktober 2026
+- Riwayat commit: https://github.com/Syifazakiaqolbi/m-one-coding-competition/commits/main
+- Log prompt AI: `docs/jurnal-prompt.md`
+- Log mentah + screenshot: `docs/log-mentah/`
